@@ -2,6 +2,78 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/lib/components/dropwdown.js":
+/*!********************************************!*\
+  !*** ./src/js/lib/components/dropwdown.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+$.prototype.dropdown = function () {
+  for (let i = 0; i < this.length; i++) {
+    const id = this[i].getAttribute('id');
+    $(this[i]).click(() => {
+      $(`[data-toggle-id="${id}"]`).fadeToggle(300);
+    });
+  }
+};
+$('.dropdown-toggle').dropdown();
+
+/***/ }),
+
+/***/ "./src/js/lib/components/modal.js":
+/*!****************************************!*\
+  !*** ./src/js/lib/components/modal.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+$.prototype.modal = function () {
+  function calcScroll() {
+    let div = document.createElement("div");
+    div.style.width = "25px";
+    div.style.height = "25px";
+    div.style.overflowY = "scroll";
+    div.style.visibility = "hidden";
+    document.body.appendChild(div);
+    let scrollWidth = div.offsetWidth - div.clientWidth;
+    return scrollWidth;
+  }
+  const currentMarginRight = parseInt(window.getComputedStyle(document.body).marginRight);
+  for (let i = 0; i < this.length; i++) {
+    let scroll = calcScroll();
+    const target = this[i].getAttribute("data-target");
+    $(this[i]).click(e => {
+      e.preventDefault();
+      $(target).fadeIn(500);
+      document.body.style.overflow = "hidden";
+      document.body.style.marginRight = `${currentMarginRight + scroll}px`;
+    });
+  }
+  const closeElements = document.querySelectorAll("[data-close]");
+  closeElements.forEach(el => {
+    $(el).click(() => {
+      $(".modal").fadeOut(500);
+      document.body.style.overflow = "";
+      document.body.style.marginRight = '0px';
+    });
+  });
+  $('.modal').click(e => {
+    if (e.target.classList.contains('modal')) {
+      $(".modal").fadeOut(500);
+      document.body.style.overflow = "";
+      document.body.style.marginRight = '0px';
+    }
+  });
+};
+$('[data-toggle="modal"]').modal();
+
+/***/ }),
+
 /***/ "./src/js/lib/core.js":
 /*!****************************!*\
   !*** ./src/js/lib/core.js ***!
@@ -51,6 +123,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/handlers */ "./src/js/lib/modules/handlers.js");
 /* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
 /* harmony import */ var _modules_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/effects */ "./src/js/lib/modules/effects.js");
+/* harmony import */ var _components_dropwdown__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/dropwdown */ "./src/js/lib/components/dropwdown.js");
+/* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/modal */ "./src/js/lib/components/modal.js");
+
+
 
 
 
@@ -443,6 +519,21 @@ __webpack_require__.r(__webpack_exports__);
 (0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').eq(2).on('click', () => {
   (0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w-500').fadeToggle(800);
 });
+
+// динамическая верстка
+// $('.wrapper').html(
+//     `
+//     <div class="dropdown">
+//         <button class="btn btn-primary dropdown-toggle" id="dropdownMenuBtn">Dropdown button</button>
+//         <div class="dropdown-menu" data-toggle-id="dropdownMenuBtn">
+//             <a href="" class="dropdown-item">Action</a>
+//             <a href="" class="dropdown-item">Action #2</a>
+//             <a href="" class="dropdown-item">Action #3</a>
+//         </div>
+//     </div>
+//     `
+// )
+// $('.dropdown-toggle').dropdown()
 
 // $('div').click(function(){
 //     console.log($(this).index())
