@@ -6,6 +6,7 @@ import "./modules/actions";
 import "./modules/effects";
 import './components/dropwdown'
 import './components/modal'
+import './components/tab'
 
 
 

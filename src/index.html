@@ -35,7 +35,7 @@
                 <div class="card-body">
                     <div class="card-title">Card title</div>
                     <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia praesentium fugiat soluta ratione ex.</p>
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Link to</a>
+                    <a href="#" id="trigger" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Link to</a>
                 </div>
             </div>
             <div class="card">
@@ -43,22 +43,13 @@
                 <div class="card-body">
                     <div class="card-title">Card title #2</div>
                     <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia praesentium fugiat soluta ratione ex.</p>
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Link to</a>
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal-2">Link to</a>
                 </div>
             </div>
         </div>
-        <div class="p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, quaerat? Cupiditate voluptate ipsam aperiam, ab ipsum nostrum assumenda molestias aliquam error illum molestiae laudantium! Maiores impedit optio dolore maxime neque.</div>
-        <div class="p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, quaerat? Cupiditate voluptate ipsam aperiam, ab ipsum nostrum assumenda molestias aliquam error illum molestiae laudantium! Maiores impedit optio dolore maxime neque.</div>
-        <div class="p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, quaerat? Cupiditate voluptate ipsam aperiam, ab ipsum nostrum assumenda molestias aliquam error illum molestiae laudantium! Maiores impedit optio dolore maxime neque.</div>
-        <div class="p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, quaerat? Cupiditate voluptate ipsam aperiam, ab ipsum nostrum assumenda molestias aliquam error illum molestiae laudantium! Maiores impedit optio dolore maxime neque.</div>
-        <div class="p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, quaerat? Cupiditate voluptate ipsam aperiam, ab ipsum nostrum assumenda molestias aliquam error illum molestiae laudantium! Maiores impedit optio dolore maxime neque.</div>
-        <div class="p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, quaerat? Cupiditate voluptate ipsam aperiam, ab ipsum nostrum assumenda molestias aliquam error illum molestiae laudantium! Maiores impedit optio dolore maxime neque.</div>
-        <div class="p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, quaerat? Cupiditate voluptate ipsam aperiam, ab ipsum nostrum assumenda molestias aliquam error illum molestiae laudantium! Maiores impedit optio dolore maxime neque.</div>
-        <div class="p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, quaerat? Cupiditate voluptate ipsam aperiam, ab ipsum nostrum assumenda molestias aliquam error illum molestiae laudantium! Maiores impedit optio dolore maxime neque.</div>
-        <div class="p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio, quaerat? Cupiditate voluptate ipsam aperiam, ab ipsum nostrum assumenda molestias aliquam error illum molestiae laudantium! Maiores impedit optio dolore maxime neque.</div>
 
         <!-- Modal -->
-        <div class="modal" id="exampleModal">
+        <!-- <div class="modal" id="exampleModal">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <button class="close" data-close>
@@ -75,6 +66,65 @@
                         <button class="btn btn-success">Save changes</button>
                     </div>
                 </div>
+            </div>
+        </div> -->
+        <div class="modal" id="exampleModal-2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button class="close" data-close>
+                        <span>&times;</span>
+                    </button>
+                    <div class="modal-header">
+                        <div class="modal-title">Modal title</div>
+                    </div>
+                    <div class="modal-body">
+                        Lorem ipsum dolor 
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" data-close>Close</button>
+                        <button class="btn btn-success">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABS -->
+
+        <div class="tab mt-20 block-center">
+            <div class="tab-panel" data-tab-panel>
+                <div class="tab-item tab-item--active">Content 1</div>
+                <div class="tab-item">Content 2</div>
+                <div class="tab-item">Content 3</div>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" id="dropdownMenuBtn2">Dropdown button</button>
+                    <div class="dropdown-menu" data-toggle-id="dropdownMenuBtn2">
+                        <a href="" class="dropdown-item">Action</a>
+                        <a href="" class="dropdown-item">Action #2</a>
+                        <a href="" class="dropdown-item">Action #3</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content tab-content--active">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam nemo error adipisci hic reiciendis, optio corporis ut quisquam fugit, fugiat dignissimos ea porro libero dolorum dicta accusantium similique mollitia ducimus.
+                <br> <br>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas est labore deserunt et culpa? Accusamus minima ipsum ad harum! Ut quidem unde harum maxime neque dolorem excepturi adipisci sint consequatur.
+            </div>
+            <div class="tab-content">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam nemo error adipisci hic reiciendis, optio corporis ut quisquam fugit, fugiat dignissimos ea porro libero dolorum dicta accusantium similique mollitia ducimus.
+                <br> <br>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas est labore deserunt et culpa? Accusamus minima ipsum ad harum! Ut quidem unde harum maxime neque dolorem excepturi adipisci sint consequatur.
+                <br> <br>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas est labore deserunt et culpa? Accusamus minima ipsum ad harum! Ut quidem unde harum maxime neque dolorem excepturi adipisci sint consequatur.
+            </div>
+            <div class="tab-content">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam nemo error adipisci hic reiciendis, optio corporis ut quisquam fugit, fugiat dignissimos ea porro libero dolorum dicta accusantium similique mollitia ducimus.
+                <br> <br>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas est labore deserunt et culpa? Accusamus minima ipsum ad harum! Ut quidem unde harum maxime neque dolorem excepturi adipisci sint consequatur.
+                <br> <br>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptas est labore deserunt et culpa? Accusamus minima ipsum ad harum! Ut quidem unde harum maxime neque dolorem excepturi adipisci sint consequatur.
+                <br> <br>  
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sequi necessitatibus accusantium temporibus, quisquam numquam perferendis in dolor eaque harum sed dicta quis et illum asperiores maxime iusto animi, porro veniam.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia repudiandae tenetur fugit mollitia libero quod sunt nesciunt nisi eveniet nulla blanditiis excepturi quo, eos assumenda, incidunt rem minus beatae architecto.
             </div>
         </div>
 
