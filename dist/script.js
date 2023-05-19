@@ -2,6 +2,102 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/lib/components/accordion.js":
+/*!********************************************!*\
+  !*** ./src/js/lib/components/accordion.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+$.prototype.accordion = function () {
+  let headActive = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'accordion-head--active';
+  let contentActive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'accordion-content--active';
+  let paddings = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 40;
+  for (let i = 0; i < this.length; i++) {
+    $(this[i]).click(() => {
+      const sibling = this[i].nextElementSibling;
+      $(this[i]).toggleClass(headActive);
+      $(sibling).toggleClass(contentActive);
+      if (this[i].classList.contains(headActive)) {
+        sibling.style.maxHeight = sibling.scrollHeight + paddings + 'px';
+      } else {
+        sibling.style.maxHeight = '0px';
+      }
+    });
+  }
+};
+$('.accordion-head').accordion();
+
+/***/ }),
+
+/***/ "./src/js/lib/components/carousel.js":
+/*!*******************************************!*\
+  !*** ./src/js/lib/components/carousel.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+$.prototype.carousel = function () {
+  for (let i = 0; i < this.length; i++) {
+    const width = window.getComputedStyle(this[i].querySelector(".carousel-inner")).width;
+    const slides = this[i].querySelectorAll(".carousel-items");
+    const slidesField = this[i].querySelector(".carousel-slides");
+    const dots = this[i].querySelectorAll(".carousel-indicators li");
+    slidesField.style.width = 100 * slides.length + "%";
+    slides.forEach(slide => {
+      slide.style.width = width;
+    });
+    let offset = 0;
+    let slideIndex = 0;
+    const dotsClass = () => {
+      dots.forEach(dot => dot.classList.remove("active"));
+      dots[slideIndex].classList.add("active");
+    };
+    $(this[i].querySelector('[data-slide="next"]')).click(e => {
+      e.preventDefault();
+      if (offset === +width.replace(/\D/g, "") * (slides.length - 1)) {
+        offset = 0;
+        slideIndex = 0;
+      } else {
+        offset += +width.replace(/\D/g, "");
+        slideIndex++;
+      }
+      slidesField.style.transform = `translateX(-${offset}px)`;
+      dotsClass();
+    });
+    $(this[i].querySelector('[data-slide="prev"]')).click(e => {
+      e.preventDefault();
+      if (offset === 0) {
+        offset = +width.replace(/\D/g, "") * (slides.length - 1);
+        slideIndex = slides.length - 1;
+      } else {
+        offset -= +width.replace(/\D/g, "");
+        slideIndex--;
+      }
+      slidesField.style.transform = `translateX(-${offset}px)`;
+      dotsClass();
+    });
+    const sliderId = this[i].getAttribute("id");
+    $(`#${sliderId} .carousel-indicators li`).click(e => {
+      const slideTo = e.target.getAttribute("data-slide-to");
+      slideIndex = slideTo;
+      offset = +width.replace(/\D/g, "") * slideTo;
+      slidesField.style.transform = `translateX(-${offset}px)`;
+      dotsClass();
+    });
+    if (dots.length > 0) {
+      dots[slideIndex].classList.add("active");
+    }
+  }
+};
+$(".carousel").carousel();
+
+/***/ }),
+
 /***/ "./src/js/lib/components/dropwdown.js":
 /*!********************************************!*\
   !*** ./src/js/lib/components/dropwdown.js ***!
@@ -200,6 +296,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_dropwdown__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/dropwdown */ "./src/js/lib/components/dropwdown.js");
 /* harmony import */ var _components_modal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/modal */ "./src/js/lib/components/modal.js");
 /* harmony import */ var _components_tab__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/tab */ "./src/js/lib/components/tab.js");
+/* harmony import */ var _components_accordion__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/accordion */ "./src/js/lib/components/accordion.js");
+/* harmony import */ var _components_carousel__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/carousel */ "./src/js/lib/components/carousel.js");
+/* harmony import */ var _services_request__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./services/request */ "./src/js/lib/services/request.js");
+
+
+
 
 
 
@@ -519,6 +621,48 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.click = function (handle
   return this;
 };
 
+/***/ }),
+
+/***/ "./src/js/lib/services/request.js":
+/*!****************************************!*\
+  !*** ./src/js/lib/services/request.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+$.prototype.get = async function (url) {
+  let dataTypeAns = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'json';
+  let res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`could not fetch ${url}, status: ${res.status}`);
+  }
+  switch (dataTypeAns) {
+    case 'json':
+      return await res.json();
+    case 'text':
+      return await res.text();
+    case 'blob':
+      return await res.blob();
+  }
+};
+$.prototype.post = async function (url, data) {
+  let dataTypeAns = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'text';
+  let res = await fetch(url, {
+    method: "POST",
+    body: data
+  });
+  switch (dataTypeAns) {
+    case 'json':
+      return await res.json();
+    case 'text':
+      return await res.text();
+    case 'blob':
+      return await res.blob();
+  }
+};
+
 /***/ })
 
 /******/ 	});
@@ -586,53 +730,78 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/lib */ "./src/js/lib/lib.js");
 
-(0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#first').on('click', () => {
-  (0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').eq(1).fadeToggle(800);
-});
-(0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('[data-count="second"]').on('click', () => {
-  (0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('div').eq(2).fadeToggle(800);
-});
-(0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('button').eq(2).on('click', () => {
-  (0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.w-500').fadeToggle(800);
-});
-(0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').click(() => (0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('#trigger').createModal({
-  text: {
-    title: 'Modal title',
-    body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, excepturi consequuntur enim blanditiis tempora mollitia minus magnam eligendi atque sit qui, odit deserunt rerum, asperiores voluptates eos cumque aliquid pariatur.'
-  },
-  btns: {
-    count: 3,
-    settings: [['Close', ['btn-danger', 'mr-10'], true], ['Save Changes', ['btn-success'], false, () => {
-      alert('Данные сохранены');
-    }], ['Another', ['btn-warning', 'ml-10'], false, () => {
-      alert('Hello World');
-    }]]
-  }
-}));
 
-// динамическая верстка
-// $('.wrapper').html(
-//     `
-//     <div class="dropdown">
-//         <button class="btn btn-primary dropdown-toggle" id="dropdownMenuBtn">Dropdown button</button>
-//         <div class="dropdown-menu" data-toggle-id="dropdownMenuBtn">
-//             <a href="" class="dropdown-item">Action</a>
-//             <a href="" class="dropdown-item">Action #2</a>
-//             <a href="" class="dropdown-item">Action #3</a>
-//         </div>
-//     </div>
-//     `
-// )
-// $('.dropdown-toggle').dropdown()
+// $('#first').on('click', () => {
+//     $('div').eq(1).fadeToggle(800);
+// });
 
-// $('div').click(function(){
-//     console.log($(this).index())
-// })
+// $('[data-count="second"]').on('click', () => {
+//     $('div').eq(2).fadeToggle(800);
+// });
 
-// console.log($('div').eq(2).find('.more'))
-// console.log($('.some').closest('.findMeq').addClass('sadsad'))
-// console.log($('.more').eq(0).siblings())
-(0,_lib_lib__WEBPACK_IMPORTED_MODULE_0__["default"])('.findMe').fadeIn(3000);
+// $('button').eq(2).on('click', () => {
+//     $('.w-500').fadeToggle(800);
+// });
+
+// $('#trigger').click(() => $('#trigger').createModal({
+//     text: {
+//         title: 'Modal title',
+//         body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, excepturi consequuntur enim blanditiis tempora mollitia minus magnam eligendi atque sit qui, odit deserunt rerum, asperiores voluptates eos cumque aliquid pariatur.',
+//     },
+//     btns: {
+//         count: 3,
+//         settings: [
+//             [
+//                 'Close',
+//                 ['btn-danger', 'mr-10'],
+//                 true
+//             ],
+//             [
+//                 'Save Changes',
+//                 ['btn-success'],
+//                 false,
+//                 () => {
+//                     alert('Данные сохранены');
+//                 }
+//             ],
+//             [
+//                 'Another',
+//                 ['btn-warning', 'ml-10'],
+//                 false,
+//                 () => {
+//                     alert('Hello World');
+//                 }
+//             ]
+//         ]
+//     }
+// }))
+
+// $().get('https://jsonplaceholder.typicode.com/todos/1')
+//     .then(res => console.log(res))
+
+// // динамическая верстка
+// // $('.wrapper').html(
+// //     `
+// //     <div class="dropdown">
+// //         <button class="btn btn-primary dropdown-toggle" id="dropdownMenuBtn">Dropdown button</button>
+// //         <div class="dropdown-menu" data-toggle-id="dropdownMenuBtn">
+// //             <a href="" class="dropdown-item">Action</a>
+// //             <a href="" class="dropdown-item">Action #2</a>
+// //             <a href="" class="dropdown-item">Action #3</a>
+// //         </div>
+// //     </div>
+// //     `
+// // )
+// // $('.dropdown-toggle').dropdown()
+
+// // $('div').click(function(){
+// //     console.log($(this).index())
+// // })
+
+// // console.log($('div').eq(2).find('.more'))
+// // console.log($('.some').closest('.findMeq').addClass('sadsad'))
+// // console.log($('.more').eq(0).siblings())
+// $('.findMe').fadeIn(3000)
 })();
 
 /******/ })()
